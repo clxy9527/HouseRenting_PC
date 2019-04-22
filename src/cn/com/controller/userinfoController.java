@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import cn.com.bean.userinfo;
+import cn.com.service.roominfoService;
 import cn.com.service.userinfoService;
 
 @Controller
@@ -17,6 +18,8 @@ import cn.com.service.userinfoService;
 public class userinfoController {
 	@Autowired
 	private userinfoService userinfoservice;
+	@Autowired
+	private roominfoService roominfoservice;
 	/**
 	 * зЂВс
 	 */
@@ -27,8 +30,11 @@ public class userinfoController {
 	@RequestMapping("/weblogin")
 	public ModelAndView loginweb(userinfo userinfo) {
 		ModelAndView mav =new ModelAndView();
-		userinfoservice.login(userinfo);
+		userinfo u2=userinfoservice.login(userinfo);
+		System.out.println("userinfo===>>>>"+userinfo.getUserName());
 		if(userinfo.getUserType()==0) {
+			mav.addObject("user",u2);
+			mav.addObject("roomlist",roominfoservice.queryall());
 			mav.setViewName("index");
 			return mav;
 		}
