@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.mapper.appointmentinfoMapper">
+	<resultMap type="appointmentinfo" id="appointmapper">
+		<id column="appointmentNo" property="appointmentNo"></id>
+		<result column="appointmentDate" property="appointmentDate"></result>
+		<result column="appointmentState" property="appointmentState"></result>
+		<association property="manger"
+			javaType="cn.com.bean.userinfo">
+			<id column="userNo" property="userNo"></id>
+			<result column="userName" property="userName"></result>
+			<result column="phone" property="phone"></result>
+		</association>
+		<association property="saler"
+			javaType="cn.com.bean.userinfo">
+			<id column="userNo" property="userNo"></id>
+			<result column="userName" property="userName"></result>
+			<result column="phone" property="phone"></result>
+		</association>
+		<association property="appointmenter"
+			javaType="cn.com.bean.userinfo">
+			<id column="userNo" property="userNo"></id>
+			<result column="userName" property="userName"></result>
+			<result column="phone" property="phone"></result>
+		</association>
+		<association property="roomNo"
+			javaType="cn.com.bean.roominfo">
+			<id column="roomNo" property="roomNo"></id>
+			<result column="roomCover" property="roomCover"></result>
+			<result column="roomArea" property="roomArea"></result>
+		</association>
+	</resultMap>
+	<select id="queryallapp" resultMap="appointmapper">
+		SELECT
+		appinfo.appointmentDate,
+		appinfo.appointmentState,
+		appinfo.appointmentNo,
+		saler.userName,
+		saler.phone,
+		appointmenter.userName,
+		appointmenter.phone,
+		manger.phone,
+		manger.userName,
+		r.roomCover,
+		r.rooomAddress,
+		r.roomNo,
+		r.roomArea
+		FROM
+		userinfo saler,
+		userinfo appointmenter,
+		userinfo manger,
+		roominfo r,
+		appointmentinfo appinfo
+		WHERE
+		saler.userNo = appinfo.saler
+		AND
+		manger.userNo = appinfo.manger
+		AND appinfo.appointmenter =
+		appointmenter.userNo
+		AND appinfo.roomNo = r.roomNo
+		<if test="type==0">
+			and appinfo.appointmenter=#{userNo}
+		</if>
+		<if test="type==1">
+			and appinfo.saler=#{userNo}
+		</if>
+		<if test="appointmentState==0">
+			and appinfo.appointmentState='0'
+		</if>
+		<if test="appointmentState==1">
+			and appinfo.appointmentState='1'
+		</if>
+		<if test="appointmentState==2">
+			and appinfo.appointmentState='2'
+		</if>
+		limit #{start} ,#{num}
+	</select>
+
+
+
+
+
+	<select id="queryallweb" resultMap="appointmapper">
+		SELECT
+		appinfo.appointmentDate,
+		appinfo.appointmentState,
+		appinfo.appointmentNo,
+		saler.userName,
+		saler.phone,
+		appointmenter.userName,
+		appointmenter.phone,
+		manger.phone,
+		manger.userName,
+		r.roomCover,
+		r.rooomAddress,
+		r.roomNo,
+		r.roomArea
+		FROM
+		userinfo saler,
+		userinfo appointmenter,
+		userinfo manger,
+		roominfo r,
+		appointmentinfo appinfo
+		WHERE
+		saler.userNo = appinfo.saler
+		AND
+		manger.userNo = appinfo.manger
+		AND appinfo.appointmenter =
+		appointmenter.userNo
+		AND appinfo.roomNo =
+		r.roomNo
+		<if test="appointmentState==0">
+			and appinfo.appointmentState='0'
+		</if>
+		<if test="appointmentState==1">
+			and appinfo.appointmentState='1'
+		</if>
+		<if test="appointmentState==2">
+			and appinfo.appointmentState='2'
+		</if>
+	</select>
+	<update id="updateappoint"
+		parameterType="cn.com.bean.appointmentinfo">
+		update appointmentinfo
+		set appointmentState
+		=#{appointmentState} where
+		appointmentNo=#{appointmentNo}
+	</update>
+	<insert id="insertappoint"
+		parameterType="cn.com.bean.appointmentinfo">
+		insert into
+		appointmentinfo
+		values(#{appointmentNo},#{appointmentDate},#{roomNo.roomNo},#{appointmenter.userNo},#{manger.userNo},#{saler.userNo},#{appointmentState})
+	</insert>
+
+
+</mapper>

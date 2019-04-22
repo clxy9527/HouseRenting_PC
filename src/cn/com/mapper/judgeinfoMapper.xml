@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.mapper.judgeinfoMapper">
+	<resultMap type="judgeinfo" id="judgeinfomapper">
+		<id column="judegNo" property="judegNo"></id>
+		<result column="judeg" property="judeg"></result>
+		<result column="judegState" property="judegState"></result>
+		<association property="roomNo" javaType="cn.com.bean.roominfo">
+			<id column="roomNo" property="roomNo"></id>
+			<result column="rooomAddress" property="rooomAddress"></result>
+			<result column="roomCover" property="roomCover"></result>
+			<result column="roomArea" property="roomArea"></result>
+			<result column="roomPrice" property="roomPrice"></result>
+		</association>
+		<association property="userNo" javaType="cn.com.bean.userinfo">
+			<id column="userNo" property="userNo"></id>
+			<result column="userName" property="userName"></result>
+			<result column="userPhone" property="userPhone"></result>
+		</association>
+	</resultMap>
+	<select id="queryjudgeinfoweb" resultMap="judgeinfomapper">
+		SELECT
+		r.*, j.*,
+		u.*
+		FROM
+		roominfo r,
+		judgeinfo j,
+		userinfo u
+		WHERE
+		r.roomNo =
+		j.roomNo
+		AND u.userNo
+		= j.userNo
+		<if test="judgeState!=-1">
+			AND j.judgeState=#{judgeState}
+		</if>
+	</select>
+	<select id="queryroomjudge" resultMap="judgeinfomapper">
+		SELECT
+		r.*, j.*,
+		u.*
+		FROM
+		roominfo r,
+		judgeinfo j,
+		userinfo u
+		WHERE
+		r.roomNo = j.roomNo
+		AND u.userNo
+		= j.userNo
+		AND j.roomNo=#{roomNo}
+	</select>
+	<insert id="insertjudge" parameterType="cn.com.bean.judgeinfo">
+		insert into judgeinfo
+		values(#{judgeNo},#{roomNo.roomNo},#{userNo.userNo},#{judge},#{judgeState})
+	</insert>
+	<update id="updatejudge" parameterType="cn.com.bean.judgeinfo">
+		update judgeinfo
+		set
+		judgeState =#{judgeState} where judgeNo=#{judgeNo}
+	</update>
+</mapper>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.mapper.roompictureMapper">
+	<insert id="insert" parameterType="cn.com.bean.roompicture">
+		insert into roompicture
+		values(#{roomNo},#{picture})
+	</insert>
+	<delete id="delete" parameterType="cn.com.bean.roompicture">
+
+		delete from roompicture
+		where picture in
+		<foreach separator="," close=")" open="(" item="item"
+			collection="list">#{item} </foreach>
+		and roomNo=#{roomNo}
+	</delete>
+</mapper>

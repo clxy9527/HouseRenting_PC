@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.mapper.collectMapper">
+	<resultMap type="cn.com.bean.collect" id="collectmapper">
+		<id column="userNo" property="userNo"></id>
+		<association property="roomNo" javaType="cn.com.bean.roominfo">
+			<id column="roomNo" property="roomNo"></id>
+			<result column="rooomAddress" property="rooomAddress"></result>
+			<result column="roomCover" property="roomCover"></result>
+			<result column="roomArea" property="roomArea"></result>
+			<result column="roomPrice" property="roomPrice"></result>
+		</association>
+	</resultMap>
+
+	<select id="queryallcollet" resultMap="collectmapper">
+		SELECT
+		r.*
+		FROM
+		roominfo r,
+		collect c
+		WHERE
+		c.roomNo = r.roomNo
+		AND c.userNo = #{userNo}
+	</select>
+
+	<delete id="deletecollect" parameterType="cn.com.bean.collect">
+		delete from collect
+		where roomNo=#{roomNo.roomNo} and userNo=#{userNo}
+	</delete>
+	<insert id="insertcollect" parameterType="cn.com.bean.collect">
+		insert into collect
+		values(#{roomNo.roomNo},#{userNo})
+	</insert>
+</mapper>
