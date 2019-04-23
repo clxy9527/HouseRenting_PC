@@ -4,17 +4,18 @@
 
 	<resultMap type="roominfo" id="roominfomapper">
 		<id column="roomNo" property="roomNo"></id>
-		<result column="rooomAddress" property="rooomAddress"></result>
+		<result column="roomAddress" property="roomAddress"></result>
 		<result column="roomCover" property="roomCover"></result>
 		<result column="roomArea" property="roomArea"></result>
 		<result column="roomPrice" property="roomPrice"></result>
-		<result column="rooomBackup" property="rooomBackup"></result>
+		<result column="roomBackup" property="roomBackup"></result>
 		<result column="roomType" property="roomType"></result>
 		<result column="roomState" property="roomState"></result>
+		<result column="roomDate" property="roomDate"></result>
+		<result column="roomCheckDate" property="roomCheckDate"></result>
 		<association property="roomDevice"
 			javaType="cn.com.bean.roomdevice">
 			<id column="roomDevice" property="roomNo"></id>
-			<result column="rooomAddress" property="rooomAddress"></result>
 			<result column="bed" property="bed"></result>
 			<result column="fridge" property="fridge"></result>
 			<result column="conditioning" property="conditioning"></result>

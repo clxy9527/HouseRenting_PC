@@ -31,8 +31,8 @@ public class userinfoController {
 	public ModelAndView loginweb(userinfo userinfo) {
 		ModelAndView mav =new ModelAndView();
 		userinfo u2=userinfoservice.login(userinfo);
-		System.out.println("userinfo===>>>>"+userinfo.getUserName());
-		if(userinfo.getUserType()==0) {
+		System.out.println("userinfo===>>>>"+u2.getUserType());
+		if(userinfo.getUserType() == 0) {
 			mav.addObject("user",u2);
 			mav.addObject("roomlist",roominfoservice.queryall());
 			mav.setViewName("index");

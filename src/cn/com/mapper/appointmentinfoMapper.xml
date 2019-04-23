@@ -28,6 +28,9 @@
 			<id column="roomNo" property="roomNo"></id>
 			<result column="roomCover" property="roomCover"></result>
 			<result column="roomArea" property="roomArea"></result>
+			<result column="roomState" property="roomState"></result>
+			<result column="roomDate" property="roomDate"></result>
+			<result column="roomCheckDate" property="roomCheckDate"></result>
 		</association>
 	</resultMap>
 	<select id="queryallapp" resultMap="appointmapper">

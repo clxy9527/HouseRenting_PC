@@ -28,7 +28,7 @@ public class userinfoService {
 	public userinfo login(userinfo userinfo) {
 		String password = userinfo.getLoginPassword();
 		userinfo u2 = userinfomapper.queryuser(userinfo.getUserNo());
-		if (u2.getLoginPassword() == password) {
+		if (u2.getLoginPassword().equals(password)) {
 			return u2;
 		} else {
 			return userinfo;

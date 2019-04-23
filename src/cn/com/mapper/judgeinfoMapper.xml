@@ -5,14 +5,18 @@
 		<id column="judegNo" property="judegNo"></id>
 		<result column="judeg" property="judeg"></result>
 		<result column="judegState" property="judegState"></result>
-		<association property="roomNo" javaType="cn.com.bean.roominfo">
+		<association property="roomNo"
+			javaType="cn.com.bean.roominfo">
 			<id column="roomNo" property="roomNo"></id>
-			<result column="rooomAddress" property="rooomAddress"></result>
+			<result column="roomAddress" property="roomAddress"></result>
 			<result column="roomCover" property="roomCover"></result>
 			<result column="roomArea" property="roomArea"></result>
 			<result column="roomPrice" property="roomPrice"></result>
+			<result column="roomDate" property="roomDate"></result>
+			<result column="roomCheckDate" property="roomCheckDate"></result>
 		</association>
-		<association property="userNo" javaType="cn.com.bean.userinfo">
+		<association property="userNo"
+			javaType="cn.com.bean.userinfo">
 			<id column="userNo" property="userNo"></id>
 			<result column="userName" property="userName"></result>
 			<result column="userPhone" property="userPhone"></result>

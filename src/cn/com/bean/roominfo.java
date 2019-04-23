@@ -1,6 +1,10 @@
 package cn.com.bean;
 
 public class roominfo {
+	//入库日期
+	private String roomDate;
+	//审核日期
+	private String roomCheckDate;
 	//标题
 	public String roomTitle;
 	//房间信息表
@@ -88,6 +92,18 @@ public class roominfo {
 	}
 	public void setUserNo(userinfo userNo) {
 		this.userNo = userNo;
+	}
+	public String getRoomDate() {
+		return roomDate;
+	}
+	public void setRoomDate(String roomDate) {
+		this.roomDate = roomDate;
+	}
+	public String getRoomCheckDate() {
+		return roomCheckDate;
+	}
+	public void setRoomCheckDate(String roomCheckDate) {
+		this.roomCheckDate = roomCheckDate;
 	}
 	
 

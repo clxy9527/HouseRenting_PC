@@ -3,12 +3,15 @@
 <mapper namespace="cn.com.mapper.collectMapper">
 	<resultMap type="cn.com.bean.collect" id="collectmapper">
 		<id column="userNo" property="userNo"></id>
-		<association property="roomNo" javaType="cn.com.bean.roominfo">
+		<association property="roomNo"
+			javaType="cn.com.bean.roominfo">
 			<id column="roomNo" property="roomNo"></id>
-			<result column="rooomAddress" property="rooomAddress"></result>
+			<result column="roomAddress" property="roomAddress"></result>
 			<result column="roomCover" property="roomCover"></result>
 			<result column="roomArea" property="roomArea"></result>
 			<result column="roomPrice" property="roomPrice"></result>
+			<result column="roomDate" property="roomDate"></result>
+			<result column="roomCheckDate" property="roomCheckDate"></result>
 		</association>
 	</resultMap>
 
