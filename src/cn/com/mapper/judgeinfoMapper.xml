@@ -2,18 +2,16 @@
 <!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.com.mapper.judgeinfoMapper">
 	<resultMap type="judgeinfo" id="judgeinfomapper">
-		<id column="judegNo" property="judegNo"></id>
-		<result column="judeg" property="judeg"></result>
-		<result column="judegState" property="judegState"></result>
-		<association property="roomNo"
-			javaType="cn.com.bean.roominfo">
-			<id column="roomNo" property="roomNo"></id>
-			<result column="roomAddress" property="roomAddress"></result>
-			<result column="roomCover" property="roomCover"></result>
-			<result column="roomArea" property="roomArea"></result>
-			<result column="roomPrice" property="roomPrice"></result>
-			<result column="roomDate" property="roomDate"></result>
-			<result column="roomCheckDate" property="roomCheckDate"></result>
+		<id column="judgeNo" property="judgeNo"></id>
+		<result column="judge" property="judge"></result>
+		<result column="judgeState" property="judgeState"></result>
+		<result column="judgeDate" property="judgeDate"></result>
+		<association property="appointmentNo"
+			javaType="cn.com.bean.appointmentinfo">
+			<id column="appointmentNo" property="appointmentNo"></id>
+			<result column="appointmentDate" property="appointmentDate"></result>
+			<result column="roomNo" property="roomNo.roomNo"></result>
+			<result column="appointmentState" property="appointmentState"></result>
 		</association>
 		<association property="userNo"
 			javaType="cn.com.bean.userinfo">
@@ -22,44 +20,54 @@
 			<result column="userPhone" property="userPhone"></result>
 		</association>
 	</resultMap>
-	<select id="queryjudgeinfoweb" resultMap="judgeinfomapper">
-		SELECT
-		r.*, j.*,
-		u.*
-		FROM
-		roominfo r,
-		judgeinfo j,
-		userinfo u
-		WHERE
-		r.roomNo =
-		j.roomNo
-		AND u.userNo
-		= j.userNo
-		<if test="judgeState!=-1">
-			AND j.judgeState=#{judgeState}
-		</if>
-	</select>
 	<select id="queryroomjudge" resultMap="judgeinfomapper">
 		SELECT
-		r.*, j.*,
-		u.*
+		a.*, j.*, u.*
 		FROM
-		roominfo r,
+		appointmentinfo a,
 		judgeinfo j,
 		userinfo u
 		WHERE
-		r.roomNo = j.roomNo
-		AND u.userNo
-		= j.userNo
-		AND j.roomNo=#{roomNo}
+		a.appointmentNo =
+		j.appointmentNo
+		AND u.userNo = j.userNo
+		AND roomNo=#{roomNo}
+		limit
+		#{start} ,#{num}
+	</select>
+	<select id="queryuserjudge" resultMap="judgeinfomapper">
+		SELECT
+		a.*, j.*, u.*
+		FROM
+		appointmentinfo a,
+		judgeinfo j,
+		userinfo u
+		WHERE
+		a.appointmentNo = j.appointmentNo
+		AND u.userNo = j.userNo
+		AND j.userNo=#{userNo}
+		limit #{start} ,#{num}
 	</select>
 	<insert id="insertjudge" parameterType="cn.com.bean.judgeinfo">
 		insert into judgeinfo
-		values(#{judgeNo},#{roomNo.roomNo},#{userNo.userNo},#{judge},#{judgeState})
+		values(#{judgeNo},#{roomNo.roomNo},#{userNo.userNo},#{judge},#{judgeState},#{judgeDate})
 	</insert>
 	<update id="updatejudge" parameterType="cn.com.bean.judgeinfo">
 		update judgeinfo
 		set
 		judgeState =#{judgeState} where judgeNo=#{judgeNo}
 	</update>
+	<select id="queryjudgeinfoweb" resultMap="judgeinfomapper">
+		select j.*,appo.*,u.* from appointmentinfo appo,judgeinfo j,userinfo u
+		where j.appointmentNo=appo.appointmentNo and u.userNo=j.userNo
+		<if test="judgeState == '-1'">
+			and judgeState='-1'
+		</if>
+		<if test="judgeState == '0'">
+			and judgeState='0'
+		</if>
+		<if test="judgeState == '1'">
+			and judgeState='1'
+		</if>
+	</select>
 </mapper>

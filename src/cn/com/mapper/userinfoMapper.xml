@@ -11,8 +11,8 @@
 		userName=#{userName},userNickname=#{userNickname},phone=#{phone},userType=#{userType},loginPassword=#{loginPassword},userBackup=#{userBackup},userImage=#{userImage}
 		where userNo=#{userNo}
 	</update>
-	<select id="queryallweb" >
-		select * from userinfo
+	<select id="queryallweb" resultType="cn.com.bean.userinfo">
+		select * from userinfo where userType!='0'
 	</select>
 	<select id="queryuser" resultType="cn.com.bean.userinfo">
 	select * from userinfo where userNo=#{userNo}

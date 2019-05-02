@@ -3,6 +3,7 @@ package cn.com.mapper;
 import cn.com.bean.roomdevice;
 
 public interface roomdeviceMapper {
-	public void insert(roomdevice roomdevice);
-	public void update(roomdevice roomdevice);
+	public boolean insert(roomdevice roomdevice);
+	public boolean update(roomdevice roomdevice);
+	public roomdevice query(String roomNo);
 }

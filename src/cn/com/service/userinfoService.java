@@ -47,4 +47,13 @@ public class userinfoService {
 		return uf;
 
 	}
+
+	// 修改个人信息
+	public boolean update(userinfo userinfo) {
+		if (userinfomapper.update(userinfo))
+			return true;
+		else
+			return false;
+
+	}
 }

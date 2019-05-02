@@ -24,8 +24,6 @@ public class roominfo {
 	//房屋状态
 	public String roomType;
 	//房屋类型
-	public roomdevice roomDevice;
-	//房屋设备
 	public userinfo userNo;
 	public String getRoomNo() {
 		return roomNo;
@@ -80,12 +78,6 @@ public class roominfo {
 	}
 	public void setRoomTitle(String roomTitle) {
 		this.roomTitle = roomTitle;
-	}
-	public roomdevice getRoomDevice() {
-		return roomDevice;
-	}
-	public void setRoomDevice(roomdevice roomDevice) {
-		this.roomDevice = roomDevice;
 	}
 	public userinfo getUserNo() {
 		return userNo;

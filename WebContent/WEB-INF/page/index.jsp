@@ -63,8 +63,8 @@
 									aria-labelledby="profileDropdown">
 							
 									<div class="dropdown-divider"></div>
-									<a class="dropdown-item"> <i
-										class="icon-logout text-primary mr-2"></i> Logout
+									<a class="dropdown-item" href="${pageContext.request.contextPath}/login.jsp"> <i
+										class="icon-logout text-primary mr-2"></i> 登出
 									</a>
 								</div></li>
 						</ul>
@@ -78,20 +78,20 @@
 			<div class="nav-bottom">
 				<div class="container">
 					<ul class="nav page-navigation">
-						<li class="nav-item"><a href="#"
+						<li class="nav-item"><a href="${pageContext.request.contextPath}/appointmentinfoController/queryAppontInfoList/100"
 							class="nav-link"><i class="link-icon icon-screen-desktop"></i><span
 								class="menu-title">预约中心</span></a></li>
-						<li class="nav-item"><a href="#"
+						<li class="nav-item"><a href="${pageContext.request.contextPath}/roominfoController/queryroominfoListweb"
 							class="nav-link"><i class="link-icon icon-disc"></i><span
 								class="menu-title">房屋中心</span></a></li>
-						<li class="nav-item mega-menu"><a href="#" class="nav-link"><i
+						<li class="nav-item mega-menu"><a href="${pageContext.request.contextPath}/userinfoController/queryuserinfoListweb" class="nav-link"><i
 								class="link-icon icon-film"></i><span class="menu-title">用户中心</span></a>
 					</li>
-						<li class="nav-item"><a href="#" class="nav-link"><i
+						<li class="nav-item"><a href="${pageContext.request.contextPath}/contractinfoController/queryContractListweb" class="nav-link"><i
 								class="link-icon icon-book-open"></i><span class="menu-title">合同中心</span></a>
 							</li>
-						<li class="nav-item mega-menu"><a href="#" class="nav-link"><i
-								class="link-icon icon-pie-chart"></i><span class="menu-title">评价中心</span></a>
+						<li class="nav-item mega-menu"><a href="${pageContext.request.contextPath}/judgeinfoCotroller/queryallweb/100" class="nav-link"><i
+								class="link-icon icon-pie-chart"></i><span class="menu-title">评价审核中心</span></a>
 						</li>
 					</ul>
 				</div>
@@ -129,9 +129,9 @@
 												<td>￥${roomlist.roomPrice}</td>
 												<td>${roomlist.getUserNo().userName}</td>
 												<td><c:out value="${fn:substring(roomlist.roomDate,0,19)}" /></td>
-												<td><c:if test="${roomlist.roomState=='未审核'}"><label class="badge badge-danger">${roomlist.roomState}</label></c:if>
-												<c:if test="${roomlist.roomState=='通过'}"><label class="badge badge-info">${roomlist.roomState}</label></c:if>
-												<c:if test="${roomlist.roomState=='未通过'}"><label class="badge badge-success">${roomlist.roomState}</label></c:if></td>
+												<td><c:if test="${roomlist.roomState==-1}"><label class="badge badge-danger">未审核</label></c:if>
+												<c:if test="${roomlist.roomState==0}"><label class="badge badge-info">通过</label></c:if>
+												<c:if test="${roomlist.roomState==1}"><label class="badge badge-success">未通过</label></c:if></td>
 												<td>
 													<button class="btn btn-outline-primary">查看</button>
 												</td>

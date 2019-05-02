@@ -10,8 +10,6 @@ public class appointmentinfo {
 	//预约房屋号
 	public userinfo appointmenter;
 	//预约人id
-	public userinfo manger;
-	//中介管理员id
 	public userinfo saler;
 	//出租方id
 	public String appointmentState;
@@ -40,12 +38,6 @@ public class appointmentinfo {
 	}
 	public void setAppointmenter(userinfo appointmenter) {
 		this.appointmenter = appointmenter;
-	}
-	public userinfo getManger() {
-		return manger;
-	}
-	public void setManger(userinfo manger) {
-		this.manger = manger;
 	}
 	public userinfo getSaler() {
 		return saler;

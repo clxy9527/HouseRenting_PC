@@ -5,12 +5,6 @@
 		<id column="appointmentNo" property="appointmentNo"></id>
 		<result column="appointmentDate" property="appointmentDate"></result>
 		<result column="appointmentState" property="appointmentState"></result>
-		<association property="manger"
-			javaType="cn.com.bean.userinfo">
-			<id column="userNo" property="userNo"></id>
-			<result column="userName" property="userName"></result>
-			<result column="phone" property="phone"></result>
-		</association>
 		<association property="saler"
 			javaType="cn.com.bean.userinfo">
 			<id column="userNo" property="userNo"></id>
@@ -20,13 +14,14 @@
 		<association property="appointmenter"
 			javaType="cn.com.bean.userinfo">
 			<id column="userNo" property="userNo"></id>
-			<result column="userName" property="userName"></result>
-			<result column="phone" property="phone"></result>
+			<result column="apper" property="userName"></result>
+			<result column="apphone" property="phone"></result>
 		</association>
 		<association property="roomNo"
 			javaType="cn.com.bean.roominfo">
 			<id column="roomNo" property="roomNo"></id>
 			<result column="roomCover" property="roomCover"></result>
+			<result column="roomAddress" property="roomAddress"></result>
 			<result column="roomArea" property="roomArea"></result>
 			<result column="roomState" property="roomState"></result>
 			<result column="roomDate" property="roomDate"></result>
@@ -42,39 +37,37 @@
 		saler.phone,
 		appointmenter.userName,
 		appointmenter.phone,
-		manger.phone,
-		manger.userName,
 		r.roomCover,
-		r.rooomAddress,
+		r.roomAddress,
 		r.roomNo,
 		r.roomArea
 		FROM
 		userinfo saler,
 		userinfo appointmenter,
-		userinfo manger,
-		roominfo r,
+		roominfo
+		r,
 		appointmentinfo appinfo
 		WHERE
 		saler.userNo = appinfo.saler
 		AND
-		manger.userNo = appinfo.manger
-		AND appinfo.appointmenter =
+		appinfo.appointmenter =
 		appointmenter.userNo
-		AND appinfo.roomNo = r.roomNo
+		AND appinfo.roomNo =
+		r.roomNo
 		<if test="type==0">
 			and appinfo.appointmenter=#{userNo}
 		</if>
 		<if test="type==1">
 			and appinfo.saler=#{userNo}
 		</if>
-		<if test="appointmentState==0">
+		<if test="appointmentState=='0'">
 			and appinfo.appointmentState='0'
 		</if>
-		<if test="appointmentState==1">
-			and appinfo.appointmentState='1'
+		<if test="appointmentState=='-1'">
+			and appinfo.appointmentState='-1'
 		</if>
-		<if test="appointmentState==2">
-			and appinfo.appointmentState='2'
+		<if test="appointmentState=='1'">
+			and appinfo.appointmentState='1'
 		</if>
 		limit #{start} ,#{num}
 	</select>
@@ -82,8 +75,56 @@
 
 
 
-
+	<!-- web查看所有 -->
 	<select id="queryallweb" resultMap="appointmapper">
+		SELECT
+		appinfo.appointmentDate,
+		appinfo.appointmentState,
+		appinfo.appointmentNo,
+		saler.userName,
+		saler.phone,
+		appointmenter.userName apper,
+		appointmenter.phone apphone,
+		r.roomCover,
+		r.roomAddress,
+		r.roomNo,
+		r.roomArea,
+		r.roomState
+		FROM
+		userinfo saler,
+		userinfo appointmenter,
+		roominfo r,
+		appointmentinfo appinfo
+		WHERE
+		saler.userNo = appinfo.saler
+		AND appinfo.appointmenter =
+		appointmenter.userNo
+		AND appinfo.roomNo = r.roomNo
+		<if test="appointmentState=='0'">
+			and appinfo.appointmentState='0'
+		</if>
+		<if test="appointmentState=='-1'">
+			and appinfo.appointmentState='-1'
+		</if>
+		<if test="appointmentState=='1'">
+			and appinfo.appointmentState='1'
+		</if>
+	</select>
+	<update id="updateappoint"
+		parameterType="cn.com.bean.appointmentinfo">
+		update appointmentinfo
+		set appointmentState
+		=#{appointmentState},appointmentDate=#{appointmentDate} where
+		appointmentNo=#{appointmentNo}
+	</update>
+	<insert id="insertappoint"
+		parameterType="cn.com.bean.appointmentinfo">
+		insert into
+		appointmentinfo
+		values(#{appointmentNo},#{appointmentDate},#{roomNo.roomNo},#{appointmenter.userNo},#{saler.userNo},#{appointmentState})
+	</insert>
+	<!-- 查看某个预约信息 -->
+	<select id="queryoneapp" resultMap="appointmapper">
 		SELECT
 		appinfo.appointmentDate,
 		appinfo.appointmentState,
@@ -92,49 +133,24 @@
 		saler.phone,
 		appointmenter.userName,
 		appointmenter.phone,
-		manger.phone,
-		manger.userName,
 		r.roomCover,
-		r.rooomAddress,
+		r.roomAddress,
 		r.roomNo,
 		r.roomArea
 		FROM
 		userinfo saler,
 		userinfo appointmenter,
-		userinfo manger,
-		roominfo r,
+		roominfo
+		r,
 		appointmentinfo appinfo
 		WHERE
 		saler.userNo = appinfo.saler
 		AND
-		manger.userNo = appinfo.manger
-		AND appinfo.appointmenter =
+		appinfo.appointmenter =
 		appointmenter.userNo
 		AND appinfo.roomNo =
 		r.roomNo
-		<if test="appointmentState==0">
-			and appinfo.appointmentState='0'
-		</if>
-		<if test="appointmentState==1">
-			and appinfo.appointmentState='1'
-		</if>
-		<if test="appointmentState==2">
-			and appinfo.appointmentState='2'
-		</if>
+		and appinfo.appointmentNo=#{appointmentNo}
 	</select>
-	<update id="updateappoint"
-		parameterType="cn.com.bean.appointmentinfo">
-		update appointmentinfo
-		set appointmentState
-		=#{appointmentState} where
-		appointmentNo=#{appointmentNo}
-	</update>
-	<insert id="insertappoint"
-		parameterType="cn.com.bean.appointmentinfo">
-		insert into
-		appointmentinfo
-		values(#{appointmentNo},#{appointmentDate},#{roomNo.roomNo},#{appointmenter.userNo},#{manger.userNo},#{saler.userNo},#{appointmentState})
-	</insert>
-
 
 </mapper>

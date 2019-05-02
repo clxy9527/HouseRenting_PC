@@ -4,6 +4,7 @@
 
 	<resultMap type="roominfo" id="roominfomapper">
 		<id column="roomNo" property="roomNo"></id>
+		<result column="roomTitle" property="roomTitle"></result>
 		<result column="roomAddress" property="roomAddress"></result>
 		<result column="roomCover" property="roomCover"></result>
 		<result column="roomArea" property="roomArea"></result>
@@ -13,24 +14,8 @@
 		<result column="roomState" property="roomState"></result>
 		<result column="roomDate" property="roomDate"></result>
 		<result column="roomCheckDate" property="roomCheckDate"></result>
-		<association property="roomDevice"
-			javaType="cn.com.bean.roomdevice">
-			<id column="roomDevice" property="roomNo"></id>
-			<result column="bed" property="bed"></result>
-			<result column="fridge" property="fridge"></result>
-			<result column="conditioning" property="conditioning"></result>
-			<result column="washer" property="washer"></result>
-			<result column="tv" property="tv"></result>
-			<result column="intelnet" property="intelnet"></result>
-			<result column="sofa" property="sofa"></result>
-			<result column="cook" property="cook"></result>
-			<result column="wardrobe" property="wardrobe"></result>
-			<result column="balcony" property="balcony"></result>
-			<result column="centralheating" property="centralheating"></result>
-			<result column="waterheater" property="waterheater"></result>
-			<result column="toilte" property="toilte"></result>
-		</association>
-		<association property="userNo" javaType="cn.com.bean.userinfo">
+		<association property="userNo"
+			javaType="cn.com.bean.userinfo">
 			<id column="userNo" property="userNo"></id>
 			<result column="userName" property="userName"></result>
 			<result column="phone" property="phone"></result>
@@ -38,12 +23,39 @@
 	</resultMap>
 	<insert id="insert" parameterType="cn.com.bean.roominfo">
 		insert into roominfo
-		values(#{roomNo},#{rooomAddress},#{roomCover},#{roomArea},#{roomPrice},#{rooomBackup},#{roomState},#{roomType},#{userNo.userNo})
+		values(#{roomNo},#{roomAddress},#{roomCover},#{roomArea},#{roomPrice},#{roomBackup},#{roomState},#{roomType},#{userNo.userNo},#{roomTitle})
 	</insert>
 	<update id="update" parameterType="cn.com.bean.roominfo">
 		update roominfo
-		set
-		rooomAddress=#{rooomAddress},roomCover=#{roomCover},roomArea=#{roomArea},roomPrice=#{roomPrice},rooomBackup=#{rooomBackup},roomState=#{roomState},roomType=#{roomType}
+		<set>
+			<if test="roomAddress !=null">
+				roomAddress=#{roomAddress},
+			</if>
+			<if test="roomCover !=null">
+				roomCover=#{roomCover},
+			</if>
+			<if test="roomArea > 0 and roomPrice!=null">
+				roomArea=#{roomArea},
+			</if>
+			<if test="roomPrice > 0 and roomPrice!=null">
+				roomPrice=#{roomPrice},
+			</if>
+			<if test="roomBackup != null">
+				roomBackup=#{roomBackup},
+			</if>
+			<if test="roomState != null and roomState!=null">
+				roomState=#{roomState},
+			</if>
+			<if test="roomType != null">
+				roomType=#{roomType},
+			</if>
+			<if test="roomTitle != null">
+				roomTitle=#{roomTitle},
+			</if>
+			<if test="roomCheckDate != null">
+				roomCheckDate=#{roomCheckDate},
+			</if>
+		</set>
 		where roomNo=#{roomNo}
 	</update>
 	<select id="queryallweb" resultMap="roominfomapper">
@@ -65,11 +77,25 @@
 		SELECT u.*,r.* from userinfo
 		u,roominfo r
 		where u.userNo=r.userNo
-		<if test="roomState!=0">
-			roomState=#{roomState}
-		</if>
-		<if test="roomType!=0">
-			roomType=#{roomType}
-		</if>
+		limit #{start} ,#{num}
+	</select>
+	<select id="queryuserapp" resultMap="roominfomapper">
+		SELECT u.*,r.* from userinfo
+		u,roominfo r
+		where u.userNo=r.userNo
+		and
+		u.userNo=#{userNo}
+		limit #{start}
+		,#{num}
+	</select>
+	<select id="searchroom" resultMap="roominfomapper">
+		SELECT u.*,r.* from userinfo
+		u,roominfo r
+		where u.userNo=r.userNo
+		AND r.roomState = '0'
+		and
+		r.roomTitle like '%${roomTitle}%'
+		limit #{start}
+		,#{num}
 	</select>
 </mapper>

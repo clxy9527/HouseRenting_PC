@@ -45,8 +45,9 @@ public class contractinfoController {
 	 *
 	 */
 	@RequestMapping("/updateContract")
-	public void updateContract(contractinfo contractinfo) {
-		
+	public String updateContract(contractinfo contractinfo) {
+		contractinfoservice.update(contractinfo);
+		return "redirect:/contractinfoController/queryContractweb/"+contractinfo.getContractNo()+"";
 	}
 	/**
 	 * 新增合同
@@ -62,16 +63,22 @@ public class contractinfoController {
 	 */
 	@RequestMapping("/queryContractListweb")
 	public ModelAndView queryContractListweb() {
-		return null;
+		ModelAndView mav =new ModelAndView();
+		mav.addObject("contract",contractinfoservice.queryall());
+		mav.setViewName("contract");
+		return mav;
 
 	}
 	/**
 	 * 查询某个合同web
 	 *
 	 */
-	@RequestMapping("/queryContractweb")
-	public ModelAndView queryContractweb(@PathVariable("userNo") String userNo) {
-		return null;
+	@RequestMapping("/queryContractweb/{contractNo}")
+	public ModelAndView queryContractweb(@PathVariable("contractNo") String contractNo) {
+		ModelAndView mav =new ModelAndView();
+		mav.addObject("contract",contractinfoservice.queryone(contractNo));
+		mav.setViewName("/contractinfo");
+		return mav;
 
 	}
 }

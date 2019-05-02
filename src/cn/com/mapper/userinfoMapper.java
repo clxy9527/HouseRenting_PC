@@ -8,7 +8,7 @@ import cn.com.bean.userinfo;
 
 public interface userinfoMapper {
 	public void insert(userinfo userinfo);
-	public void update(userinfo userinfo);
+	public boolean update(userinfo userinfo);
 	public List<userinfo> queryallweb();
 	public userinfo queryuser(String userNo);
 }

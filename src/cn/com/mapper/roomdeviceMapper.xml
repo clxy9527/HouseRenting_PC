@@ -11,4 +11,7 @@
 		bed=#{bed},fridge=#{fridge},conditioning=#{conditioning},washer=#{washer},tv=#{tv},intelnet=#{intelnet},sofa=#{sofa},cook=#{cook},wardrobe=#{wardrobe},balcony=#{balcony},centralheating=#{centralheating},waterheater=#{waterheater},toilte=#{toilte}
 		where roomNo= #{roomNo}
 	</update>
+	<select id="query" resultType="cn.com.bean.roomdevice">
+	select * from roomdevice where roomNo=#{roomNo}
+	</select>
 </mapper>

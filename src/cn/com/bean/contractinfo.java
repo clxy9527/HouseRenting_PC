@@ -16,10 +16,24 @@ public class contractinfo {
 	//签定方
 	public userinfo saler;
 	//放租方
-	public userinfo operate;
-	//操作员
+	private String contractPicture;
+	//存根照片地址
+	private float contractPrice;
+	
+	public float getContractPrice() {
+		return contractPrice;
+	}
+	public void setContractPrice(float contractPrice) {
+		this.contractPrice = contractPrice;
+	}
 	public String getContractNo() {
 		return contractNo;
+	}
+	public String getContractPicture() {
+		return contractPicture;
+	}
+	public void setContractPicture(String contractPicture) {
+		this.contractPicture = contractPicture;
 	}
 	public void setContractNo(String contractNo) {
 		this.contractNo = contractNo;
@@ -59,12 +73,6 @@ public class contractinfo {
 	}
 	public void setSaler(userinfo saler) {
 		this.saler = saler;
-	}
-	public userinfo getOperate() {
-		return operate;
-	}
-	public void setOperate(userinfo operate) {
-		this.operate = operate;
 	}
 	
 	

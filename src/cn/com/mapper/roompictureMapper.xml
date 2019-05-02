@@ -13,4 +13,7 @@
 			collection="list">#{item} </foreach>
 		and roomNo=#{roomNo}
 	</delete>
+	<select id="query" resultType="cn.com.bean.roompicture">
+	select * from roompicture where roomNo =#{roomNo}
+	</select>
 </mapper>
